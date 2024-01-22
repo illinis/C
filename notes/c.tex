@@ -1,0 +1,66 @@
+\documentclass{article}
+
+\title{C Programming Language Overview}
+\author{Leonardo Resende Lopes}
+\date{January, 2024}
+
+\begin{document}
+
+\maketitle
+\clearpage
+
+\section{Types, Operators and Expressions}
+
+\subsection{Variable Names}
+
+Names are made up of letters and digits; the first character must be a letter.
+Uppercase and lowercase letters are distinct. 
+
+Traditional C practice is to use lower case for variable names, and all uppercase for symbolic constants.
+
+\subsection{Data Types and Sizes}
+
+There are only a few basic data types in C:
+
+\begin{itemize}
+
+\item \textbf{char}
+
+	A single byte, capable of holding one character in the local character set.
+
+\item \textbf{int}
+
+	An integer, typically reflecting the natural size of integers on the host machine.
+
+\item \textbf{float}
+
+	Single-precision floating point.
+
+\item \textbf{double}
+
+	Double-precision floating point.
+\end{itemize}
+
+
+In addition, there are a number of qualifiers that can be applied to these basic types. \textbf{short} and \textbf{long} apply to integers.
+
+The intent is that short and long should provide different lengths of integers where practical. Int will normally be the natural size for a particular machine. \textbf{short} is often 16 bits, \textbf{long} 32 bits, and \textbf{int} either 16 or 32 bits.
+
+Each compiler is free to choose appropriate sizes for its own hardware, subject only to the restriction that shorts and ints are at least 16 bits, longs are at least 32 bits, and short is no longer than int, which is no longer than long.
+
+The qualifier \textbf{signed} or \textbf{unsigned} may be applied to char or any integer.
+
+Unsigned numbers are always positive or zero, and obey the laws of arithmetic modulo $2^n$, where $n$ is the number of bits in the type. Whether plain chars are signed or unsigned is machine-dependent, but printable characters are always positive.
+
+The type \textbf{long double} specifies extended-precision floating point. As with integers, the sizes of floating-point objects are implementation-defined; \textbf{float}, \textbf{double} and \textbf{long double} could represent one, two or three distinct sizes.1
+
+\clearpage
+\subsection{Constants}
+
+An \textbf{integer constant} like 1234 is an int. 
+A \textbf{long constant} is written with a terminal "l" or "L" in 123456789L; An integer too big to fit into an int will also be taken as a long. Unsigned constants are written with a terminal "u" or "U", and the suffix "ul" or "UL" indicates unsigned long.
+
+\textbf{Floating-point constants} contain a decimal point (123.4), or an exponent (1e-2) or both; their type is double, unless suffixed. The suffix "f" or "F" indicate a float constant; "l" or "L" indicate a \textbf{long double}.
+
+
+\end{document}
