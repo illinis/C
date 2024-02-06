@@ -1,0 +1,43 @@
+General Data Structures Roadmap:
+Understanding Basics:
+
+Learn about arrays, linked lists, and basic algorithms (sorting, searching).
+Understand time and space complexity.
+Advanced Linear Data Structures:
+
+Study stacks and queues.
+Explore double-ended queues (deque).
+Trees:
+
+Learn about binary trees.
+Understand tree traversal algorithms (in-order, pre-order, post-order).
+Study balanced trees (AVL, Red-Black).
+Graphs:
+
+Understand graph representations (adjacency matrix, adjacency list).
+Learn graph traversal algorithms (BFS, DFS).
+Study graph algorithms (Dijkstra's, Prim's).
+Hashing:
+
+Learn about hash functions and hash tables.
+Understand collision resolution techniques.
+Advanced Data Structures:
+
+Study advanced trees (B-trees, Trie).
+Learn about disjoint-set data structures.
+Advanced Graph Algorithms:
+
+Study more advanced graph algorithms (Topological Sort, Tarjan's Algorithm).
+Understand network flow algorithms (Ford-Fulkerson).
+Dynamic Programming:
+
+Learn dynamic programming concepts and techniques.
+Solve problems using dynamic programming.
+Advanced Topics:
+
+Study advanced data structures like segment trees and Fenwick trees.
+Explore advanced algorithmic concepts.
+Practice:
+
+Solve a variety of problems on online coding platforms.
+Implement data structures from scratch.

@@ -1,4 +1,32 @@
 \documentclass{article}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{tabularx}
+
+\definecolor{mGreen}{rgb}{0,0.6,0}
+\definecolor{mGray}{rgb}{0.5,0.5,0.5}
+\definecolor{mPurple}{rgb}{0.58,0,0.82}
+\definecolor{backgroundColour}{rgb}{0.95,0.95,0.92}
+
+\lstset{
+    backgroundcolor=\color{backgroundColour},   
+    commentstyle=\color{mGreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{mGray},
+    stringstyle=\color{mPurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    language=C
+}
 
 \title{C Programming Language Overview}
 \author{Leonardo Resende Lopes}
@@ -61,6 +89,180 @@ An \textbf{integer constant} like 1234 is an int.
 A \textbf{long constant} is written with a terminal "l" or "L" in 123456789L; An integer too big to fit into an int will also be taken as a long. Unsigned constants are written with a terminal "u" or "U", and the suffix "ul" or "UL" indicates unsigned long.
 
 \textbf{Floating-point constants} contain a decimal point (123.4), or an exponent (1e-2) or both; their type is double, unless suffixed. The suffix "f" or "F" indicate a float constant; "l" or "L" indicate a \textbf{long double}.
+
+The \textbf{value of an integer can be specified in octal or hexadecimal} instead of decimal. A leading zero on an integer constant means octal; a leading '0x' or '0X' means hexadecimal.
+
+A \textbf{character constant} is an integer, written as one character within single quotes, such as 'x'. The value of a character constant is the numeric value of the character in the machine's character set.
+
+Certain characters can be represented in character and \textbf{string constants} by escape sequences like '$\backslash$n' (newline). In addition, an arbitrary byte-sized bit pattern can be specified by '$\backslash$ooo', where \textbf{ooo} is one to three octal digits, or by '$\backslash$xhh', where \textbf{hh} is one or more hexadecimal digits. Id est, we might write:
+
+\begin{lstlisting}
+	#define VTAB '\013' /* ASCII vertical tab 	*/
+	#define BELL '\007' /* ASCII bell character	*/
+\end{lstlisting}
+
+or, in hexadecimal:
+
+\begin{lstlisting}
+	#define VTAB '\xb' /* ASCII vertical tab 		*/
+	#define BELL '\x7' /* ASCII bell character	*/
+\end{lstlisting}
+
+The complete set of escape sequences is:
+
+\begin{tabularx}{0.8\textwidth}{ 
+  | >{\raggedright\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\raggedleft\arraybackslash}X | }
+  \hline
+  $\backslash$a & Alert(bell) character \\
+  \hline
+  $\backslash$b & Backspace \\
+  \hline
+  $\backslash$f & Formfeed \\
+  \hline
+  $\backslash$n & Newline \\
+  \hline
+  $\backslash$r & Carriage return \\
+  \hline
+  $\backslash$t & Horizontal Tab\\
+  \hline
+  $\backslash$v & Vertical Tab \\
+  \hline
+  $\backslash$ $\backslash$ & Backslash \\
+  \hline
+  $\backslash$? & Question mark \\
+  \hline
+  $\backslash$' & Single quote \\
+  \hline
+  $\backslash$" & Double quote \\
+  \hline
+  $\backslash$ooo & Octal number \\
+  \hline
+  $\backslash$xhh & Hexadecimal number \\
+  \hline
+  
+ \end{tabularx}
+
+\vspace{8pt}
+The character constant \textbf{'$\backslash$0'} represents the character with value zero, the null character. The '$\backslash$0' is foten written instead of 0 to emphasize the character nature of some expression, but the \textbf{numeric value is just 0}.
+
+A \textbf{constant expression} is an expression that involves only constants.
+
+\clearpage
+A \textbf{string constant}, or \textbf{string literal}, is is a sequence of zero or more characters surrounded by double quotes.
+String constants can be concatenated at compile time: 
+
+\begin{lstlisting}
+	"hello," "world"
+\end{lstlisting}
+
+\vspace{8pt}
+
+is equivalent to:
+
+\begin{lstlisting}
+	"hello, world"
+\end{lstlisting}
+
+This is useful for splitting long strings across several source lines.
+
+Technically, a string constant is an array of characters. The internal representation of a string has a null character '$\backslash$0' at the end, so the physical storage required is one more than the number of characters written between the quotes. This representation means that there is no limit to how long a string can be, but programs must scan a string completely to determine its length. The standard library function \textbf{strlen(s)} returns the length of its character string argument \textbf{s}, excluding the terminal '$\backslash$0'.
+
+Be careful to distinguish between a character constant and a string that contains a single character.
+
+An enumeration is a list of constant integer values, as in:
+
+\begin {lstlisting}
+	enum boolean { NO, YES};
+\end{lstlisting}
+
+The first name in an enum has value 0, the next 1, and so on, unless explicit values are specified. 
+Names in different enumerations must be distinct. Values need not to be distinct in the same enumeration.
+
+Enumerations provide a convenient way to associate constant values with names, an alternative to '\textbf{\#define}' with the advantage that the values can be generated for you. 
+
+Although variables of enum types may be declared, compilers need not check that what you store in such a variable is a valid value for the enumeration. Nevertheless, \textbf{enumeration variables offer the chance of checking and so are often better than '\#defines'}.
+
+\subsection{Declarations}
+
+All variables must be declared before use, although certain declarations can be made implicitly by context. A declaration specifies a type, and contains a list of one or more variables of that type, as in:
+
+\begin{lstlisting}
+	int lower, upper, step;
+	char c, line[1000];
+\end{lstlisting}
+
+A variable may also be initialized in its declaration. If the name is followed by an equals sign and an expression, the expressions serves as an initializer, as in:
+
+\begin{lstlisting}
+	char esc = '\\';
+	int i = 0;
+	int limit = MAXLINE+1;
+	float eps = 1.0e-5;
+\end{lstlisting}
+
+If the variable in question is not automatic, the initialization is done once only, conceptually before the program starts executing, and the \textbf{initializer must be a constant expression}. An explicitly initialized automatic variable is initialized each time the function or block it is in entered; the initializer may be any expression. \textbf{External and static variables are initialized to zero by default}. Automatic variables for which there is no explicit initializer have undefined (i.e., garbage) values. 
+
+The qualifier \textbf{const} can be applied to the declaration of any variable to specify that its value will not be changed. For an array, the const qualifier says that the elements will not be altered. 
+
+\begin{lstlisting}
+	const double e = 2.71828182845905;
+	const char msg[] = "warning: ";
+\end{lstlisting}
+
+The const declaration can also be used with array arguments, to indicate that the function does not change that array:
+
+\begin{lstlisting}
+	int strlen(const char[]);
+\end{lstlisting}
+
+The result is implementation-defined if an attempt is made to change a const.
+
+\subsection{Arithmetic Operators}
+
+The binary arithmetic operators are \textbf{+}, \textbf{-}, \textbf{*}, \textbf{/}, and the modulus operator \textbf{\%}. Integer division truncates any fractional part. The expression:
+
+\begin{lstlisting}
+	x % y
+\end{lstlisting}
+
+produces the remainder when x is divided by y, and thus is zero when y divides x exactly.
+
+The \textbf{\%} operator cannot be applied to \textbf{float} or \textbf{double}. The direction of truncation for / and the sign of the result for \% are machine-dependent for negative operands, as in the action taken on \textbf{overflow and underflow}.
+
+The binary \textbf{+} and \textbf{-} operators have the same precedence, which is lower than the precedence of *, /, and \%, which is in turn lower than unary + and -.
+
+\textbf{Arithmetic operators associate left to right}.
+
+\clearpage
+\subsection{Relational and Logical Operators}
+
+The relational operators are \textbf{$>$}, \textbf{$>=$}, \textbf{$<$} and \textbf{$<=$}.
+
+They all have the same precedence. Just below them in precedence are the equality operators: \textbf{$==$} and \textbf{$!=$}.
+
+Relational operators have lower precedence than arithmetic operators, so an expression like \textbf{$i < lim-1$} is taken as \textbf{$i < (lim-1)$}, as would be expected.
+
+More interesting are the logical operators \textbf{$\&\&$} and \textbf{$||$}. Expressions connect by $\&\&$ or $||$ are evaluated left to right, and evaluation stops as soon as the truth or falsehood of the result is known. 
+
+The precedence of $\&\&$ is higher than that of $||$, and both are lower than relational and equality operators.
+
+By definition, the numeric value of a relational or logical expression is 1 if the realtion is true, and 0 if the relation is false. 
+
+The unary negation operator ! converts a \textbf{non-zero operand} into 0, and a \textbf{zero operand} into 1.
+
+\subsection{Type conversions}
+
+\subsection{Increment and Decrement Operators}
+
+\subsection{Bitwise Operators}
+
+\subsection{Assignment Operators and Expressions}
+
+\subsection{Conditional Expressions}
+
+\subsection{Precedence and Order of Evaluation}
 
 
 \end{document}
